@@ -1,5 +1,7 @@
 ##How to set up virtualisation
 
+Update Windows (Security KB*)
+
 ```Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All```
 
 ---
