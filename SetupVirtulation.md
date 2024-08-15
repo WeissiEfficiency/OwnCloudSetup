@@ -2,7 +2,9 @@
 
 Update Windows (Security KB*)
 
-```Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All```
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+```
 
 Nested Virt
 ```
