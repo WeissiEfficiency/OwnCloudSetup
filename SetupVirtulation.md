@@ -4,6 +4,11 @@ Update Windows (Security KB*)
 
 ```Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All```
 
+Nested Virt
+```
+Set-VMProcessor -VMName <VMName> -ExposeVirtualizationExtensions $true
+```
+
 ---
 
 ##WSL
