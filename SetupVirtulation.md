@@ -37,7 +37,12 @@ wsl -l -online
 
 ``` 
 wsl install <right Distro>
- ```
+```
+
+Set Verion to 2, got more features
+```
+wsl --set-default-version 2
+```
 
 Create Username and Password
 
