@@ -36,6 +36,8 @@ Create Username and Password
 apt-get update
 ```
 
+[WSL Doku](https://learn.microsoft.com/de-de/windows/wsl/about)
+
 ---
 
 ##Docker (ubuntu v24.04)
@@ -64,12 +66,36 @@ echo \
 sudo apt-get update
 ```
 
+Install Docker Enginge
+``` 
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
+```
 
+Run for test
+``` 
+sudo docker run hello-world
+```
+
+Docker is installed
+
+[Docker Doku Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
 ---
 
 ##Portainer
 
-``` 
+
+Persisitant volume for Protainer
+```
+docker volume create portainer_data
+```
+
+Install Portainer Container with Ports 8000 and 9443
+```
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
+>https://localhost:9443
+ 
 
 ```
