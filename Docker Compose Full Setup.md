@@ -26,16 +26,16 @@ TRUSTED_PROXIES=caddy
 APACHE_DISABLE_REWRITE_IP=1
 OVERWRITEHOST=nextcloud.tmplinux.com
 ```
-- MYSQL_ROOT_PASSWORD The password that will be set for the MariaDB root superuser account.
+- _MYSQL_ROOT_PASSWORD_ The password that will be set for the MariaDB root superuser account.
 - MYSQL_USER: Sets a name for the user who will interact with the Nextcloud database.
-- MYSQL_PASSWORD: Sets a password for the user who will interact with the Nextcloud database.
-- MYSQL_DATABASE:  Sets the name of the Nextcloud database.
+- _MYSQL_PASSWORD_: Sets a password for the user who will interact with the Nextcloud database.
+- _MYSQL_DATABASE_:  Sets the name of the Nextcloud database.
 - MYSQL_HOST: The service name we set in the “docker-compose.yaml” file for the MariaDB container.
 - REDIS_HOST: The name of the service we set in the “docker-compose.yaml” file for the Redis container.
 - OVERWRITEPROTOCOL: Set the protocol of the proxy (Caddy) service. In our case, we’ll use HTTPS.
 - TRUSTED_PROXIES: Allows the Nextcloud container to get the visitor’s real IP address sent by the Caddy container.
 - APACHE_DISABLE_REWRITE_IP: Disable the IP addresses to be rewritten.
-- OVERWRITEHOST: Set the hostname of the proxy.
+- _OVERWRITEHOST_: Set the hostname of the proxy.
 
 >Make sure to replace the values for “MYSQL_ROOT_PASSWORD,” “MYSQL_USER,” “MYSQL_PASSWORD,” “MYSQL_DATABASE,” and “OVERWRITEHOST” with the ones you want.
 
