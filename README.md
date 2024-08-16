@@ -1,1 +1,1 @@
-[[_TOC_]]
+# Table of Contents
