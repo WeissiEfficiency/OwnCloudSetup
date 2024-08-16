@@ -1,11 +1,3 @@
-# Enable Virtualization
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -All -NoRestart
-Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -All -NoRestart
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -All -NoRestart
-
-# Restart computer to apply changes
-Restart-Computer
-
 # After restart, install WSL
 wsl --install
 
