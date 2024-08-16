@@ -1,0 +1,21 @@
+# Enable Virtualization
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -All -NoRestart
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -All -NoRestart
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -All -NoRestart
+
+# Restart computer to apply changes
+Restart-Computer
+
+# After restart, install WSL
+wsl --install
+
+# Unregister Ubuntu if it exists
+wsl --unregister Ubuntu
+
+# Check available distributions
+wsl -l -o
+
+# Install the preferred distribution (replace <distro_name> with your desired distro from the list)
+wsl --install -d <distro_name>
+
+# Set up username and password during installation
