@@ -8,6 +8,6 @@ wsl --unregister Ubuntu
 wsl -l -o
 
 # Install the preferred distribution (replace <distro_name> with your desired distro from the list)
-wsl --install -d <distro_name>
+wsl --install -d Ubuntu-24.04
 
 # Set up username and password during installation
