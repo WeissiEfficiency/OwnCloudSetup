@@ -5,3 +5,6 @@ https://www.google.com/search?client=firefox-b-d&q=hairpin+NAT.#vhid=DA4oRHDmVmo
 
 
 https://www.reddit.com/r/selfhosted/comments/152onud/can_i_have_a_domain_name_redirect_to_a_local/
+
+
+https://www.reddit.com/r/selfhosted/comments/1bmpsvn/accessing_to_self_hosted_services_without_opening/
