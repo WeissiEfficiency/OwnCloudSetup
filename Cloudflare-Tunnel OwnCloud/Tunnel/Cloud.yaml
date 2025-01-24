@@ -1,0 +1,45 @@
+networks:
+  backend:
+    external: false
+  cloudflare:
+    external: true
+
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_HOST: db
+    volumes:
+      - nextcloud_data:/var/www/html
+    ports:
+      - "8080:80"  # Adjust to your desired port
+    depends_on:
+      - db
+    networks:
+      - cloudflare 
+      - backend
+
+  db:
+    image: mariadb:latest
+    container_name: nextcloud_db
+    restart: unless-stopped
+    networks:
+      - backend
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - db_data:/var/lib/mysql
+
+
+
+volumes:
+  nextcloud_data:
+  db_data:
