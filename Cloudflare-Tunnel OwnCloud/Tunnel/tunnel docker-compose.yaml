@@ -2,7 +2,8 @@ networks:
   cloudflare:
     external: true
   backend:
-    external: true
+    internal: true
+    
 services:
   cloudflaretunnel:
     container_name: cloudflaretunnel-homelab
