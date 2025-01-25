@@ -1,0 +1,15 @@
+networks:
+  cloudflare:
+    external: true
+
+services:
+  webserver:
+    image: nginx:latest
+    container_name: nginx_webserver
+    volumes:
+      - /home/docker/webserver/servercontents:/usr/share/nginx/html:ro
+
+    restart: unless-stopped
+    networks:
+    - cloudflare
+
