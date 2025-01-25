@@ -6,12 +6,12 @@ services:
     networks:
       - cloudflare
     environment:
-      MYSQL_PASSWORD: examplepassword
-      MYSQL_ROOT_PASSWORD: examplepassword
-      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_HOST: db
     volumes:
-      - nextcloud_data:/var/www/html
+      - /home/weissi/docker/nextcloud:/var/www/html
     ports:
       - "8080:80"  # Adjust to your desired port
 
@@ -22,7 +22,17 @@ services:
     networks:
       - cloudflare
     environment:
-      MYSQL_ROOT_PASSWORD: examplepassword
-      MYSQL_PASSWORD: examplepassword
-      MYSQL_USER: nextcloud
-      MYSQL_DATABASE: nextcl
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+
+
+      --------
+
+
+      MYSQL_PASSWORD=examplepassword
+MYSQL_ROOT_PASSWORD=examplepassword
+MYSQL_USER=nextcloud
+MYSQL_DATABASE=nextcl
