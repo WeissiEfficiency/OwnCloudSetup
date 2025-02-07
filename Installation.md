@@ -113,8 +113,6 @@ Nextcloud + Maria DB docker compose
 
 ```docker-compose.yaml
 
-version: '3.8'
-
 services:
   nextcloud:
     image: nextcloud:latest
