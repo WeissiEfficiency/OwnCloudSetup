@@ -43,7 +43,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     networks:
-      - nextcloud_backend
+      - backend
       - frontend
     ports:
       - "80:80"
@@ -57,7 +57,7 @@ services:
       - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_API_TOKEN}
 
 networks:
-  nextcloud_backend:
+  backend:
     external: true
   frontend:
     external: true
