@@ -1,4 +1,4 @@
-´´´services:
+services:
   mariadb:
     image: mariadb:latest
     container_name: nextcloud_mariadb
@@ -46,4 +46,4 @@ networks:
     external: true
   macvlan_net:
     external: true
-    ´´´
+    
