@@ -1,4 +1,3 @@
-``
 services:
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -18,4 +17,4 @@ networks:
     external: true
   macvlan_net:
     external: true
-    ´´
+    
