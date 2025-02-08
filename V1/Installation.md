@@ -255,7 +255,7 @@ services:
 networks:
   backend:
     external: true
-  frontend
+  frontend:
     external: true
 
 ```
