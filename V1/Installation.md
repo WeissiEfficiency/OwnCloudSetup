@@ -1,3 +1,18 @@
+Make directories
+
+```
+cd /home/weissi
+sudo mkdir docker
+sudo mkdir docker/cloudflare
+sudo mkdir docker/nextcloud
+sudo mkdir docker/traefik
+sudo mkdir docker/traefik/config
+sudo mkdir docker/traefik/data
+sudo mkdir docker/portainer
+
+```
+
+
 Erstellen pref Subnets
 
 ```
@@ -110,10 +125,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
-      - ./letsencrypt:/letsencrypt
+      - ./data/certs/:/var/traefik/certs/:rw
     environment:
-      - CF_API_EMAIL=${CLOUDFLARE_EMAIL}
-      - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
 
 networks:
   backend:
@@ -132,6 +146,8 @@ sudo vim traefik.yml
 global:
   checkNewVersion: false
   sendAnonymousUsage: false
+log:
+  level: DEBUG
 api:
   dashboard: true
 #  insecure: true  # Securely expose this in production
@@ -144,7 +160,6 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-
 certificatesResolvers:
   cloudflare:
     acme:
@@ -166,7 +181,7 @@ sudo vim .env
 
 ```.env
 CLOUDFLARE_EMAIL=Email@mail.com
-CLOUDFLARE_API_TOKEN=your_cloudflare_DNS_api_token
+CF_DNS_API_TOKEN=your_cloudflare_DNS_api_token
 ```
 
 ---
@@ -202,11 +217,13 @@ services:
       - ./data:/var/www/html/data
     labels:
       - traefik.enable=true
-      - traefik.http.routers.nextcloud.rule=Host(`${NEXTCLOUD_DOMAIN}`)
+      - traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.weissi.org`)
       - traefik.http.routers.nextcloud-http.entrypoint=web
-#      - traefik.http.routers.nextcloud.entrypoints=websecure
-#      - traefik.http.routers.nextcloud.tls.certresolver=cloudflare
-#      - traefik.http.services.nextcloud.loadbalancer.server.port=80
+      - traefik.http.routers.nextcloud-https.tls=true
+      - traefik.http.routers.nextcloud-https.tls.certresolver=cloudflare
+      - traefik.http.routers.nextcloud-https.entrypoints=websecure
+      - traefik.http.routers.nextcloud-https.rule=Host(`nextcloud.weissi.org`)
+
 
   mariadb:
     image: mariadb:latest
