@@ -1,5 +1,5 @@
 ```
-sudo cd /home/weissi
+cd /home/weissi
 sudo mkdir docker
 sudo mkdir docker/cloudflare
 sudo mkdir docker/nextcloud
