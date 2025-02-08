@@ -46,11 +46,12 @@ sudo docker compose up -d
 ---
 
 Cloudflare Tunnel docker compose
+Cloudflare Tunnel .env
+
 ```
 cd /home/weissi/docker/cloudflare
 sudo vim docker-compose.yml
 ```
-
 
 ```docker-compose.yaml
 networks:
@@ -69,24 +70,30 @@ services:
       - frontend
 ```
 
-```
-sudo docker compose up -d
-```
-
-Cloudflare Tunnel .env
-
 ```.env
 TUNNEL_TOKEN= hier Tunnel Token einsetzen
 ```
 
+```
+sudo docker compose up -d
+```
+
+---
 
 Traefik docker compose
+raefik config traefik.yml
+
+
+```
+cd /home/weissi/docker/traefik
+sudo vim docker-compose.yml
+```
 
 ```docker-compose.yaml
 
 services:
   traefik:
-    image: traefik:v2.10
+    image: traefik:latest
     container_name: traefik
     restart: unless-stopped
     networks:
@@ -95,9 +102,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.yml:/etc/traefik/traefik.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
       - ./letsencrypt:/letsencrypt
     environment:
       - CF_API_EMAIL=${CLOUDFLARE_EMAIL}
@@ -111,26 +119,23 @@ networks:
 
 ```
 
-
-Traefik yml
+```
+cd /home/weissi/docker/traefik/config
+sudo vim traefik.yml
+```
 
 ```Traefik.yaml
-
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
 api:
   dashboard: true
-  insecure: true  # Securely expose this in production
-
+#  insecure: true  # Securely expose this in production
 entryPoints:
   web:
     address: ":80"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-  websecure:
+websecure:
     address: ":443"
-
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
@@ -179,11 +184,12 @@ services:
       - ./nextcloud:/var/www/html
       - ./data:/var/www/html/data
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nextcloud.rule=Host(`${NEXTCLOUD_DOMAIN}`)"
-      - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.routers.nextcloud.tls.certresolver=cloudflare"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+      - traefik.enable=true
+      - traefik.http.routers.nextcloud.rule=Host(`${NEXTCLOUD_DOMAIN}`)
+      - traefik.http.routers.nextcloud-http.entrypoint=web
+#      - traefik.http.routers.nextcloud.entrypoints=websecure
+#      - traefik.http.routers.nextcloud.tls.certresolver=cloudflare
+#      - traefik.http.services.nextcloud.loadbalancer.server.port=80
 
   mariadb:
     image: mariadb:latest
