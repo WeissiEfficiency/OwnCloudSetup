@@ -24,9 +24,9 @@ sudo docker network create --driver bridge  frontend_rp
 ---
 
 Install Portainer
+
 ```
-cd /home/weissi/docker/portainer
-sudo vim docker-compose.yml
+sudo vim  /home/weissi/docker/portainer/docker-compose.yml
 ```
 
 ```docker-compose.yaml
@@ -65,8 +65,7 @@ Cloudflare Tunnel docker compose
 Cloudflare Tunnel .env
 
 ```
-cd /home/weissi/docker/cloudflare
-sudo vim docker-compose.yml
+sudo vim  /home/weissi/docker/cloudflare/docker-compose.yml
 ```
 
 ```docker-compose.yaml
@@ -86,11 +85,16 @@ services:
       - frontend
 ```
 
+```
+sudo vim  /home/weissi/docker/cloudflare/.env
+```
+
 ```.env
 TUNNEL_TOKEN= hier Tunnel Token einsetzen
 ```
 
 ```
+cd /home/weissi/docker/cloudflare
 sudo docker compose up -d
 ```
 
@@ -104,8 +108,7 @@ Traefik .env
 
 
 ```
-cd /home/weissi/docker/traefik
-sudo vim docker-compose.yml
+sudo vim /home/weissi/docker/traefik/docker-compose.yml
 ```
 
 ```docker-compose.yaml
@@ -138,8 +141,7 @@ networks:
 ```
 
 ```
-cd /home/weissi/docker/traefik/config
-sudo vim traefik.yml
+sudo vim /home/weissi/docker/traefik/config/traefik.yml
 ```
 
 ```Traefik.yaml
@@ -154,16 +156,17 @@ api:
 entryPoints:
   web:
     address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
 websecure:
     address: ":443"
-providers:
-  docker:
-    endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: false
 certificatesResolvers:
   cloudflare:
     acme:
-      email: "stefanweissopuss@gmail.com
+      email: "stefanweissopuss@gmail.com"
       storage: var/traefik/certs/cloudflare-acme.json
       caServer: 'https://acme-v02.api.letsencrypt.org/directory'
       keyType: EC256
@@ -172,17 +175,26 @@ certificatesResolvers:
         resolver:
           - "1.1.1.1:53"
           - "8.8.8.8:53"
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
 ```
 
 ```
-cd ..
-sudo vim .env
+sudo vim /home/weissi/docker/traefik/.env
 ```
 
 ```.env
-CLOUDFLARE_EMAIL=Email@mail.com
 CF_DNS_API_TOKEN=your_cloudflare_DNS_api_token
 ```
+
+
+```
+cd /home/weissi/docker/traefik
+sudo docker compose up -d
+```
+
 
 ---
 
@@ -191,8 +203,7 @@ Nextcloud + Maria DB docker compose
 Nextcloud + Maria DB .env
 
 ```
-cd /home/weissi/docker/nextcloud
-sudo vim docker-compose.yml
+sudo vim /home/weissi/docker/nextcloud/docker-compose.yml
 ```
 
 ```docker-compose.yaml
@@ -249,7 +260,7 @@ networks:
 ```
 
 ```
-sudo vim .env
+sudo vim /home/weissi/docker/nextcloud/.env
 ```
 
 ```.env
@@ -262,4 +273,10 @@ NEXTCLOUD_ADMIN_USER=admin
 NEXTCLOUD_ADMIN_PASSWORD=secure_admin_password
 NEXTCLOUD_DOMAIN=nextcloud.weissi.org
 
+```
+
+
+```
+cd /home/weissi/docker/nextcloud
+sudo docker compose up -d
 ```
