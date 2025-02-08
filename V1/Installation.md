@@ -7,7 +7,14 @@ sudo docker network create --driver bridge  frontend_rp
 
 ```
 
+---
+
 Install Portainer
+```
+cd /home/weissi/docker/portainer
+sudo vim docker-compose.yml
+
+```
 
 ```docker-compose.yaml
 services:
@@ -34,7 +41,7 @@ networks:
     external: true
 
 ```
-
+---
 
 Cloudflare Tunnel docker compose
 
