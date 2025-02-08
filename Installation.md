@@ -2,7 +2,9 @@ Erstellen pref Subnets
 
 ```
 sudo docker network create --driver bridge --subnet 10.0.1.0/24 --internal backend
-sudo docker network create --driver bridge frontend
+sudo docker network create --driver bridge --external frontend
+sudo docker network create --driver bridge --external frontend_rp
+
 ```
 
 
