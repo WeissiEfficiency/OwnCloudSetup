@@ -55,6 +55,7 @@ networks:
 ```
 
 ```
+cd /home/weissi/docker/portainer
 sudo docker compose up -d
 ```
 
