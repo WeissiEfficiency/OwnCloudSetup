@@ -7,6 +7,34 @@ sudo docker network create --driver bridge  frontend_rp
 
 ```
 
+Install Portainer
+
+```docker-compose.yaml
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9443:9443"  # Web-UI über HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Zugriff auf Docker-API
+      - portainer_data:/data  # Persistente Daten
+    networks:
+      - backend  # Internes Netzwerk
+      - frontend # Externes Netzwerk
+
+volumes:
+  portainer_data:
+
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true
+
+```
+
 
 Cloudflare Tunnel docker compose
 
