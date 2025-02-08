@@ -44,6 +44,14 @@ networks:
 ---
 
 Cloudflare Tunnel docker compose
+```
+cd /home/weissi/docker/cloudflare
+sudo vim docker-compose.yml
+
+
+```
+
+
 
 ```docker-compose.yaml
 networks:
