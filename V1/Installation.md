@@ -46,6 +46,7 @@ sudo docker compose up -d
 ---
 
 Cloudflare Tunnel docker compose
+
 Cloudflare Tunnel .env
 
 ```
@@ -81,7 +82,10 @@ sudo docker compose up -d
 ---
 
 Traefik docker compose
-raefik config traefik.yml
+
+Traefik config traefik.yml
+
+Traefik .env
 
 
 ```
@@ -144,24 +148,37 @@ providers:
 certificatesResolvers:
   cloudflare:
     acme:
-      email: ${CF_API_EMAIL}
-      storage: /letsencrypt/acme.json
+      email: "stefanweissopuss@gmail.com
+      storage: var/traefik/certs/cloudflare-acme.json
+      caServer: 'https://acme-v02.api.letsencrypt.org/directory'
+      keyType: EC256
       dnsChallenge:
         provider: cloudflare
+        resolver:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
 ```
 
-
-Traefik .env
-
+```
+cd ..
+sudo vim .env
 ```
 
-CLOUDFLARE_EMAIL=your@email.com
-CLOUDFLARE_API_TOKEN=your_cloudflare_api_token
-
+```.env
+CLOUDFLARE_EMAIL=Email@mail.com
+CLOUDFLARE_API_TOKEN=your_cloudflare_DNS_api_token
 ```
 
+---
 
 Nextcloud + Maria DB docker compose
+
+Nextcloud + Maria DB .env
+
+```
+cd /home/weissi/docker/nextcloud
+sudo vim docker-compose.yml
+```
 
 ```docker-compose.yaml
 
@@ -214,7 +231,9 @@ networks:
 
 ```
 
-Nextcloud & Maria DB .env
+```
+sudo vim .env
+```
 
 ```.env
 
