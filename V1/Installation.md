@@ -4,7 +4,6 @@ Erstellen pref Subnets
 sudo docker network create --driver bridge --subnet 10.0.1.0/24 --internal backend
 sudo docker network create --driver bridge  frontend
 sudo docker network create --driver bridge  frontend_rp
-
 ```
 
 ---
@@ -13,7 +12,6 @@ Install Portainer
 ```
 cd /home/weissi/docker/portainer
 sudo vim docker-compose.yml
-
 ```
 
 ```docker-compose.yaml
@@ -39,18 +37,19 @@ networks:
     external: true
   frontend:
     external: true
+```
 
 ```
+sudo docker compose up -d
+```
+
 ---
 
 Cloudflare Tunnel docker compose
 ```
 cd /home/weissi/docker/cloudflare
 sudo vim docker-compose.yml
-
-
 ```
-
 
 
 ```docker-compose.yaml
@@ -70,6 +69,9 @@ services:
       - frontend
 ```
 
+```
+sudo docker compose up -d
+```
 
 Cloudflare Tunnel .env
 
