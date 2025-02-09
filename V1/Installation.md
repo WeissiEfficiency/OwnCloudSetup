@@ -5,8 +5,7 @@ cd /home/weissi
 sudo mkdir docker
 sudo mkdir docker/cloudflare
 sudo mkdir docker/nextcloud
-sudo mkdir docker/traefik
-sudo mkdir docker/traefik/config
+sudo mkdir -p docker/traefik/config
 sudo mkdir docker/traefik/data
 sudo mkdir docker/portainer
 
