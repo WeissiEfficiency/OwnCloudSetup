@@ -2,8 +2,7 @@ Make directories
 
 ```
 cd /home/weissi
-sudo mkdir docker
-sudo mkdir docker/cloudflare
+sudo mkdir -p docker/cloudflare
 sudo mkdir docker/nextcloud
 sudo mkdir -p docker/traefik/config
 sudo mkdir docker/traefik/data
