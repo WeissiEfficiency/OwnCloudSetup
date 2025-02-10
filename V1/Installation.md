@@ -279,3 +279,13 @@ NEXTCLOUD_DOMAIN=nextcloud.weissi.org
 cd /home/weissi/docker/nextcloud
 sudo docker compose up -d
 ```
+
+
+
+---
+
+# Pending:
+Health Checks
+Umstellung der Directories
+Zusweisung und Segmentierung
+
