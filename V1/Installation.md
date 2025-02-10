@@ -225,6 +225,7 @@ services:
     volumes:
       - ./nextcloud:/var/www/html
       - ./data:/var/www/html/data
+      - ./data/certs/:/var/traefik/certs/:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.weissi.org`)
