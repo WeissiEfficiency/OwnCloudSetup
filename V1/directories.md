@@ -8,3 +8,8 @@ sudo mkdir docker/traefik/config
 sudo mkdir docker/portainer
 
 ```
+or
+
+```
+mkdir -p /home/weissi/docker/{cloudflare,nextcloud,traefik/config,portainer}
+```
