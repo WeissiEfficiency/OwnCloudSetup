@@ -212,6 +212,10 @@ services:
     image: nextcloud:latest
     container_name: nextcloud
     restart: unless-stopped
+    ports:
+      - "8081:80"
+      - "4443:443"
+
     networks:
       - backend
       - frontend
@@ -225,20 +229,16 @@ services:
     volumes:
       - ./nextcloud:/var/www/html
       - ./data:/var/www/html/data
-      - ./data/certs/:/var/traefik/certs/:ro
+      - ./data/certs/:/var/traefik/certs/:rw
     labels:
       - traefik.enable=true
       - traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.weissi.org`)
-      - traefik.http.routers.nextcloud-http.entrypoint=web
+      - traefik.http.routers.nextcloud-http.entrypoints=web
       - traefik.http.routers.nextcloud-https.tls=true
       - traefik.http.routers.nextcloud-https.tls.certresolver=cloudflare
       - traefik.http.routers.nextcloud-https.entrypoints=websecure
       - traefik.http.routers.nextcloud-https.rule=Host(`nextcloud.weissi.org`)
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/status.php"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+
 
   mariadb:
     image: mariadb:latest
@@ -254,44 +254,12 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-    backup:
-    image: alpine:latest
-    container_name: backup
-    depends_on:
-      - nextcloud
-      - mariadb
-    volumes:
-      - ./nextcloud:/var/www/html
-      - ./data:/var/www/html/data
-      - ./backup:/backup
-    environment:
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_HOST=mariadb
-    entrypoint: >
-      sh -c "apk add --no-cache mariadb-client tar &&
-      while true; do
-        echo 'Backing up Nextcloud data...' &&
-        tar -czf /backup/nextcloud_data_$(date +'%Y%m%d%H%M').tar.gz /var/www/html/data &&
-        echo 'Backing up MariaDB database...' &&
-        mysqldump -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE > /backup/mariadb_dump_$(date +'%Y%m%d%H%M').sql &&
-        sleep 3600;
-      done"
-
 
 networks:
   backend:
     external: true
   frontend:
     external: true
-
 ```
 
 ```
