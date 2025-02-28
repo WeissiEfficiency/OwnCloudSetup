@@ -215,7 +215,6 @@ services:
     ports:
       - "8081:80"
       - "4443:443"
-
     networks:
       - backend
       - frontend
@@ -226,18 +225,22 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - SKIP_DOMAIN_VALIDATION=true
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.weissi.org
+      # Optionally add overwrite protocol if needed:
+      - OVERWRITEPROTOCOL=https
     volumes:
       - ./nextcloud:/var/www/html
       - ./data:/var/www/html/data
-      - ./data/certs/:/var/traefik/certs/:rw
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.weissi.org`)
-      - traefik.http.routers.nextcloud-http.entrypoints=web
-      - traefik.http.routers.nextcloud-https.tls=true
-      - traefik.http.routers.nextcloud-https.tls.certresolver=cloudflare
-      - traefik.http.routers.nextcloud-https.entrypoints=websecure
-      - traefik.http.routers.nextcloud-https.rule=Host(`nextcloud.weissi.org`)
+#      - ./data/certs/:/var/traefik/certs/:rw
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.weissi.org`)
+#      - traefik.http.routers.nextcloud-http.entrypoints=web
+#      - traefik.http.routers.nextcloud-https.tls=true
+#      - traefik.http.routers.nextcloud-https.tls.certresolver=cloudflare
+#      - traefik.http.routers.nextcloud-https.entrypoints=websecure
+#      - traefik.http.routers.nextcloud-https.rule=Host(`nextcloud.weissi.org`)
 
 
   mariadb:
