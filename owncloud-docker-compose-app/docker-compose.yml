@@ -1,0 +1,62 @@
+services:
+  owncloud:
+    image: owncloud/server:latest
+    container_name: owncloud
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+      - redis
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost/"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+    volumes:
+      - owncloud_data:/var/www/html  # Adjust this path as needed for your ownCloud image
+    networks:
+      frontend:
+        ipv4_address: 10.0.1.10
+      backend:
+        ipv4_address: 10.0.2.10
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+#    healthcheck:
+#      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$MYSQL_ROOT_PASSWORD || exit 1"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+    networks:
+      backend:
+        ipv4_address: 10.0.2.11
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      backend:
+        ipv4_address: 10.0.2.12
+
+volumes:
+  owncloud_data:
+  mariadb_data:
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
